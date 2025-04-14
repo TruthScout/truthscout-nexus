@@ -141,14 +141,14 @@ elif view == "🎯 Investigative Spotlight":
                 for src in exec.get("verified_sources", []):
                     st.markdown(f"[Source]({src})")
 # ----------------------------
-# View 4: Interactive Actor View
+# View 5: Truth Network
 # ----------------------------
 elif view == "📡 Truth Network":
     st.title("📡 Truth Network: Explore Entity Relationships")
 
     # Load CSV data
     network_path = os.path.join(data_dir, "truth-network.csv")
-    df = pd.read_csv(network_path)
+    df = pd.read_csv(network_path, encoding='ISO-8859-1')
 
     # Build searchable list of all unique entities
     entities = sorted(set(df['entity_1_name']).union(set(df['entity_2_name'])))
