@@ -148,7 +148,7 @@ elif view == "📡 Truth Network":
 
     # Load CSV data
     network_path = os.path.join(data_dir, "truth-network.csv")
-    df = pd.read_csv(network_path, encoding='utf-16')
+    df = pd.read_csv(network_path, encoding='utf-8')
 
     # Build searchable list of all unique entities
     entities = sorted(set(df['entity_1_name']).union(set(df['entity_2_name'])))
