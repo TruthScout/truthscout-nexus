@@ -156,20 +156,19 @@ elif view == "📡 Truth Network":
     truth_network_path = os.path.join(data_dir, "truth-network.csv")
     df = pd.read_csv(truth_network_path)
 
-    # Parse URL query params
-    query_params = st.query_params()
+    # Get URL query parameters (safe version)
+    query_params = st.experimental_get_query_params()
     selected_region = query_params.get("region", [df["entity_1_region"].dropna().unique()[0]])[0]
     selected_conflict = query_params.get("conflict", [df["conflict"].dropna().unique()[0]])[0]
     selected_type = query_params.get("type", [df["entity_1_type"].dropna().unique()[0]])[0]
     selected_impact = query_params.get("impact", [df["impact_area"].dropna().unique()[0]])[0]
     search_query = query_params.get("search", [""])[0].lower()
 
-    # UI text input for search
+    # Search bar
     search_query = st.text_input("Search by name, tag, or relation", value=search_query).strip().lower()
 
-    # Dropdown filters using correct selectbox syntax
+    # Dropdown options
     col1, col2, col3, col4 = st.columns(4)
-
     region_options = sorted(df["entity_1_region"].dropna().unique())
     conflict_options = sorted(df["conflict"].dropna().unique())
     type_options = sorted(df["entity_1_type"].dropna().unique())
@@ -184,7 +183,7 @@ elif view == "📡 Truth Network":
     with col4:
         selected_impact = st.selectbox("⚖️ Impact Area", impact_options, index=impact_options.index(selected_impact) if selected_impact in impact_options else 0)
 
-    # Apply filters
+    # Apply dropdown filters
     filtered_df = df[
         (df["entity_1_region"] == selected_region) &
         (df["conflict"] == selected_conflict) &
@@ -201,7 +200,7 @@ elif view == "📡 Truth Network":
             df["relationship_type"].str.lower().str.contains(search_query)
         ]
 
-    # Dynamic relevance score
+    # Compute relevance score
     def compute_relevance(row):
         score = 1
         if "profit" in row["relationship_type"].lower():
@@ -212,11 +211,11 @@ elif view == "📡 Truth Network":
             score += 2
         return score
 
-    filtered_df = filtered_df.copy()  # make it writable
+    filtered_df = filtered_df.copy()  # fix ValueError on assigning new column
     filtered_df["dynamic_score"] = filtered_df.apply(compute_relevance, axis=1)
     filtered_df = filtered_df.sort_values(by="dynamic_score", ascending=False)
 
-    # Display filtered results
+    # Display results
     st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
     for _, row in filtered_df.iterrows():
         st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
@@ -228,7 +227,7 @@ elif view == "📡 Truth Network":
             st.markdown(f"• [Source]({row['source']})")
         st.markdown("---")
 
-    # Generate sharable link
+    # Sharable filter link
     st.markdown("### 📤 Share This View")
     params = {
         "region": selected_region,
@@ -245,12 +244,10 @@ elif view == "📡 Truth Network":
         st.code(shareable_link, language="markdown")
         st.success("Link generated! You can use this as a citation in an article.")
 
-    # ---------------------------------
-    # 🕸️ Network Graph Visualization
-    # ---------------------------------
+    # 🕸️ Graph Visualization
     st.markdown("## 🕸️ Network Graph View")
-
     G = nx.DiGraph()
+
     for _, row in filtered_df.iterrows():
         e1 = row["entity_1_name"]
         e2 = row["entity_2_name"]
