@@ -152,12 +152,16 @@ elif view == "📡 Truth Network":
 
     st.title("📡 Truth Network: Interest-Based Filter Explorer")
 
-    # Load CSV
+    # Load data
     truth_network_path = os.path.join(data_dir, "truth-network.csv")
     df = pd.read_csv(truth_network_path)
 
-    # Get query parameters
-    query_params = st.experimental_get_query_params()
+    # --- Safe query param retrieval (supports new + old Streamlit) ---
+    try:
+        query_params = st.query_params
+    except Exception:
+        query_params = st.experimental_get_query_params()
+
     selected_region = query_params.get("region", [df["entity_1_region"].dropna().unique()[0]])[0]
     selected_conflict = query_params.get("conflict", [df["conflict"].dropna().unique()[0]])[0]
     selected_type = query_params.get("type", [df["entity_1_type"].dropna().unique()[0]])[0]
@@ -167,7 +171,7 @@ elif view == "📡 Truth Network":
     # Search input
     search_query = st.text_input("Search by name, tag, or relation", value=search_query).strip().lower()
 
-    # Filter dropdowns
+    # Dropdown filters
     col1, col2, col3, col4 = st.columns(4)
     region_options = sorted(df["entity_1_region"].dropna().unique())
     conflict_options = sorted(df["conflict"].dropna().unique())
@@ -191,7 +195,7 @@ elif view == "📡 Truth Network":
         (df["impact_area"] == selected_impact)
     ]
 
-    # Apply search
+    # Apply search filter
     if search_query:
         filtered_df = filtered_df[
             df["entity_1_name"].str.lower().str.contains(search_query) |
@@ -200,7 +204,7 @@ elif view == "📡 Truth Network":
             df["relationship_type"].str.lower().str.contains(search_query)
         ]
 
-    # 🧠 Robust dynamic scoring
+    # --- Robust dynamic scoring ---
     def compute_relevance(row):
         score = 1
         try:
@@ -214,7 +218,7 @@ elif view == "📡 Truth Network":
             pass
         return score
 
-    # Safely score only if data exists
+    # Only compute if data is present
     if not filtered_df.empty:
         filtered_df = filtered_df.copy()
         filtered_df["dynamic_score"] = filtered_df.apply(compute_relevance, axis=1)
@@ -222,7 +226,7 @@ elif view == "📡 Truth Network":
     else:
         st.warning("⚠️ No data matches the current filters.")
 
-    # Show entries
+    # --- Render entries ---
     st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
     for _, row in filtered_df.iterrows():
         st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
@@ -234,7 +238,7 @@ elif view == "📡 Truth Network":
             st.markdown(f"• [Source]({row['source']})")
         st.markdown("---")
 
-    # Sharable link
+    # --- Sharable Link ---
     st.markdown("### 📤 Share This View")
     params = {
         "region": selected_region,
@@ -244,14 +248,16 @@ elif view == "📡 Truth Network":
         "search": search_query
     }
     query_string = urllib.parse.urlencode(params)
-    base_url = "https://truthscore-nexus.streamlit.app"
-    shareable_link = f"{base_url}/?{query_string}"
+
+    # IMPORTANT: Update this to your actual page slug
+    base_url = "https://truthscore-nexus.streamlit.app/Truth_Network"  # match your deployed page
+    shareable_link = f"{base_url}?{query_string}"
 
     if st.button("🔗 Copy Sharable Filter Link"):
         st.code(shareable_link, language="markdown")
         st.success("Link generated! You can use this as a citation in an article.")
 
-    # 🌐 Graph
+    # --- Graph Visualization ---
     st.markdown("## 🕸️ Network Graph View")
     G = nx.DiGraph()
 
