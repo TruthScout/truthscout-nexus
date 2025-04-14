@@ -1,0 +1,6 @@
+entity_1_id,entity_1_name,entity_1_type,entity_1_region,relationship_type,entity_2_id,entity_2_name,entity_2_type,entity_2_region,conflict,category,source,tags,impact_area,relevance_score
+larry_fink,Larry Fink,Person,US,CEO_of,blackrock,BlackRock Inc.,Company,US,Gaza,people→company,https://www.blackrock.com/corporate/about-us/leadership/larry-fink,"leadership,finance",Economy,9.5
+blackrock,BlackRock Inc.,Company,US,owns_stake_in,raytheon,Raytheon Technologies,Company,US,Gaza,finance→military,https://investigate.afsc.org/company/blackrock,"weapons,arms,investment",Military,9.8
+blackrock,BlackRock Inc.,Company,US,owns_share_of,bloomberg,Bloomberg LP,Media,Global,Gaza,finance→media,https://etfdb.com,"narrative,media,investment",Media,8.7
+raytheon,Raytheon Technologies,Company,US,supplied_weapons_to,op_edge,Operation Protective Edge,Conflict,Gaza,Gaza,military→conflict,https://www.sipri.org,"missiles,defense",Military,9.2
+cnn,CNN,Media,US,covered,op_edge,Operation Protective Edge,Conflict,Gaza,Gaza,media→conflict,https://cnn.com/middleeast,"framing,media,war",Narrative,7.9
