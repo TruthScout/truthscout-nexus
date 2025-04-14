@@ -144,37 +144,39 @@ elif view == "🎯 Investigative Spotlight":
 # View 5: Truth Network
 # ----------------------------
 elif view == "📡 Truth Network":
-    st.title("📡 Truth Network: Explore Entity Relationships")
+    st.title("📡 Truth Network: Interest-Based Filter Explorer")
 
-    # Load CSV data
-    network_path = os.path.join(data_dir, "truth-network.csv")
-    df = pd.read_csv(network_path, encoding='utf-8')
+    # Load updated CSV
+    truth_network_path = os.path.join(data_dir, "truth-network.csv")
+    df = pd.read_csv(truth_network_path)
 
-    # Build searchable list of all unique entities
-    entities = sorted(set(df['entity_1_name']).union(set(df['entity_2_name'])))
-    selected = st.selectbox("🔎 Choose an entity to explore", entities)
+    # Filter controls
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        selected_region = st.selectbox("🌍 Region", sorted(set(df["entity_1_region"].dropna().unique())), index=0)
+    with col2:
+        selected_conflict = st.selectbox("💣 Conflict", sorted(set(df["conflict"].dropna().unique())), index=0)
+    with col3:
+        selected_type = st.selectbox("🏷️ Entity Type", sorted(set(df["entity_1_type"].dropna().unique())), index=0)
+    with col4:
+        selected_impact = st.selectbox("⚖️ Impact Area", sorted(set(df["impact_area"].dropna().unique())), index=0)
 
-    # Filter the full dataset
-    related = df[(df['entity_1_name'] == selected) | (df['entity_2_name'] == selected)]
+    # Apply filters
+    filtered_df = df[
+        (df["entity_1_region"] == selected_region) &
+        (df["conflict"] == selected_conflict) &
+        (df["entity_1_type"] == selected_type) &
+        (df["impact_area"] == selected_impact)
+    ].sort_values(by="relevance_score", ascending=False)
 
-    st.subheader(f"🔗 Connections for: **{selected}**")
+    st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
 
-    for _, row in related.iterrows():
-        source = row['entity_1_name']
-        target = row['entity_2_name']
-        direction = "→"
-        if selected == target:
-            source, target = target, source
-            direction = "←"
-
-        # Visualize connection
-        st.markdown(f"**{source}** {direction} *{row['relationship_type']}* {target}")
-        st.markdown(f"• Category: `{row['category']}`")
-
-        if pd.notna(row['notes']):
-            st.markdown(f"• Notes: _{row['notes']}_")
-
+    # Display filtered results
+    for _, row in filtered_df.iterrows():
+        st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
+        st.markdown(f"• Conflict: `{row['conflict']}` | Region: `{row['entity_1_region']}`")
+        st.markdown(f"• Category: `{row['category']}` | Impact: `{row['impact_area']}`")
+        if pd.notna(row['tags']):
+            st.markdown(f"• Tags: _{row['tags']}_")
         if pd.notna(row['source']):
-            st.markdown(f"• [Source]({row['source']})")
-
-        st.markdown("---")
+            st
