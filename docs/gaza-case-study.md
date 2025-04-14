@@ -2,79 +2,62 @@
 
 ## Introduction
 
-Gaza is often portrayed as an isolated conflict zone, but a deeper look reveals its role as a pressure point in a much larger system of control, resource consolidation, and narrative management. This case study traces how financial, military, and media power networks have shaped the region — not just in action, but in silence.
+Gaza is often portrayed in Western media as an isolated crisis or symmetrical conflict. In truth, it represents one of the clearest modern examples of a structurally engineered imbalance — sustained by global financial, military, and narrative systems. This case study exposes how international actors shape, finance, protect, and benefit from the prolonged instability in Gaza.
 
-## Key Actors and Power Brokers
+## Key Power Brokers Involved
 
-The following actors play significant roles in maintaining or benefitting from the Gaza crisis:
+This dossier identifies 10 key actors whose roles materially impact Gaza through either funding, policy, military aid, asset control, or public perception:
 
-- **United States Government**: Military aid, UN vetoes, diplomatic cover.
-- **Rothschild Banking Group**: Indirect financial entanglements across infrastructure and regional portfolios.
-- **Israel**: Primary on-ground enforcer, executing military operations using Western-funded assets.
-- **Bertelsmann Stiftung**: Influences perception through academic ratings like the BTI index.
-- *(Full list in [actors.yml](../data/actors.yml))*
+- **[BlackRock Inc.](https://investigate.afsc.org/company/blackrock)** — Major investor in weapons manufacturers supplying Israel.
+- **[Vanguard Group](https://investigate.afsc.org/company/vanguard-group)** — Co-owner of global defense contractors, profiting from regional instability.
+- **[U.S. Department of State](https://www.state.gov/u-s-security-cooperation-with-israel/)** — Provides direct aid to Israel and consistently blocks UN ceasefire resolutions.
+- **[Israeli Ministry of Defense](https://www.gov.il/en/Departments/ministry_of_defense)** — Oversees all military actions in Gaza, enabled by foreign funding.
+- **[Bertelsmann Stiftung](https://bti-project.org/en/reports)** — Shapes global narratives through policy indices, often framing the region as inherently unstable.
+- **[Rothschild Banking Group](https://www.rothschildandco.com/en/newsroom/)** — Involved in financing infrastructure and strategic Israeli assets.
+- **[Mossad](https://www.theguardian.com/world/2021/jul/18/pegasus-project-spyware-israel-nso-group)** — Operates globally to suppress threats to Israeli policy, exporting surveillance tools.
+- **[CIA](https://www.nytimes.com/2017/08/02/world/middleeast/cia-syria-rebel-arm-train-trump.html)** — Historically active in destabilizing the broader region (Syria, Lebanon), with spillover into Gaza.
+- **[European Commission](https://neighbourhood-enlargement.ec.europa.eu/eu-support-palestinian-people_en)** — Wields aid and trade frameworks to apply political pressure to Palestinian governance.
+- **[UNRWA](https://www.unrwa.org/)** — Targeted for de-funding and delegitimization despite providing essential aid and services.
 
-## Operations and Strategies
+All actors are documented with source links in the [TruthScout Nexus Actor Intelligence Dashboard](https://truthscore-nexus.streamlit.app/).
 
-Several covert and overt operations have exacerbated Gaza's instability:
+## Military Campaigns and Foreign Support
 
-- **Operation Protective Edge (2014)**: Led by Israel, backed by U.S. arms and logistics. Resulted in mass civilian casualties and infrastructural destruction.
-- **Operation Timber Sycamore**: While focused on Syria, it militarized regional borders and emboldened actors destabilizing Gaza by proxy.
-- *(Details in [operations.yml](../data/operations.yml))*
+### Operation Protective Edge (2014)
+- Israeli military operation that resulted in over 2,000 Palestinian deaths.
+- Enabled by billions in U.S. aid and coordinated logistics.
+- Supported by weapons manufacturers like Raytheon and Lockheed Martin — both heavily owned by BlackRock and Vanguard.
 
-## Financial Levers and Aid Manipulation
+### Other operations:
+- Operation Cast Lead (2008–09)
+- Operation Guardian of the Walls (2021)
+- Operation Breaking Dawn (2022)
 
-Funding is one of the primary tools of influence:
+**Verified Sources:**
+- [UN Human Rights Council Report on 2014 Gaza Conflict](https://www.ohchr.org/en/hr-bodies/hrc/cois/gaza-conflict)
+- [Amnesty International: "Black Flag" Report](https://www.amnesty.org/en/latest/news/2015/07/israel-gaza-operation-protective-edge-war-crimes/)
 
-- **$3.8B/year U.S. military aid** to Israel under the latest MoU.
-- **Conditional humanitarian aid** to Palestinians, weaponized as a compliance tool.
-- **Defense contracts and private portfolios** benefiting from prolonged conflict.
-- *(See [finances.yml](../data/finances.yml))*
+## Financial Influence and Weaponization of Aid
 
-## Narrative Control: The Media and Think Tank Layer
+- The **$3.8B/year U.S. military aid package** underpins Israel's continued ability to act militarily without consequence.
+- Palestinian humanitarian aid via **USAID** and **EU frameworks** is highly conditional, often used as leverage.
+- BlackRock and Vanguard continue to profit from the regional arms trade while remaining shielded from scrutiny.
 
-Western media consistently frames Gaza through a lens of:
-- "Terror vs. defense"
-- "Escalations" rather than occupation
-- Disregard for structural asymmetry
+## Narrative Control: Framing the Conflict
 
-Think tanks like Bertelsmann shape perceptions globally, justifying interventions by casting regional actors as inherently unstable.
+Western media and think tanks participate in the conflict by shaping how the public perceives it:
+- **BBC and CNN** typically report escalations as "clashes" or "retaliation," ignoring occupation context.
+- **Bertelsmann Stiftung’s BTI Index** rates Palestinian governance as dysfunctional while ignoring external suppression mechanisms.
+- Disinformation often labels UNRWA as complicit with extremism to justify funding cuts.
 
-Examples:
-- [BBC framing during 2021 escalation](https://www.bbc.com/news/world-middle-east-57110368)
-- [BTI MENA Index](https://bti-project.org/en/reports/regional-report-ENA.html)
+## Conclusion
 
-*(More entries in [narratives.yml](../data/narratives.yml))*
+The situation in Gaza is not merely a "conflict" — it is a **coordinated outcome** of interconnected financial, military, and narrative systems. This case study represents one node in a global structure of hegemony.
 
-## Military Logistics and Arms Flow
-
-- **Iron Dome** funded by U.S. taxpayers.
-- **Weapons deliveries** documented via SIPRI and U.S. export records.
-- These assets are consistently used in operations over Gaza.
-
-*(See [military.yml](../data/military.yml) for entries and sources)*
-
-## Impact and Ethical Questions
-
-- Civilian deaths and infrastructure collapse in Gaza are not just collateral — they are foreseeable outcomes of funded systems.
-- The logic of control, profit, and suppression remains largely unchallenged in mainstream channels.
-
-## Next: Connecting to the Broader Network
-
-This Gaza case is not isolated. It is a node in a much larger hegemonic framework. From here, the dossier expands to:
-
-- **Lebanon**
-- **Syria**
-- **Libya**
-- **Egypt**
-- **Sudan**
-
-All tied together through finance, media, military, and institutional complicity.
-
-## References
-
-All linked YAML files and source documentation available in the [GitHub repository](https://github.com/TruthScout/western-hegemony-nexus).
+We do not present this data to promote ideology — only **clarity**. Truth is infrastructure.
 
 ---
 
-> 🧠 *This dossier is not a call to ideology. It is a call to truth.*
+> 📁 View all supporting data: [GitHub Repository](https://github.com/TruthScout/truthscout-nexus)
+>  
+> 📊 Explore live dashboards: [TruthScout Nexus Streamlit App](https://truthscore-nexus.streamlit.app/)
