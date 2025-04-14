@@ -27,7 +27,8 @@ view = st.sidebar.radio(
         "🧩 Actor Intelligence",
         "📖 Gaza Case Study",
         "📂 Structured Data",
-        "🎯 Investigative Spotlight"
+        "🎯 Investigative Spotlight",
+        "📡 Truth Network"
     ]
 )
 
@@ -138,3 +139,41 @@ elif view == "🎯 Investigative Spotlight":
                     st.markdown(f"- {role}")
                 for src in exec.get("verified_sources", []):
                     st.markdown(f"[Source]({src})")
+# ----------------------------
+# View 4: Interactive Actor View
+# ----------------------------
+elif view == "📡 Truth Network":
+    st.title("📡 Truth Network: Explore Entity Relationships")
+
+    # Load CSV data
+    network_path = os.path.join(data_dir, "truth-network.csv")
+    df = pd.read_csv(network_path)
+
+    # Build searchable list of all unique entities
+    entities = sorted(set(df['entity_1_name']).union(set(df['entity_2_name'])))
+    selected = st.selectbox("🔎 Choose an entity to explore", entities)
+
+    # Filter the full dataset
+    related = df[(df['entity_1_name'] == selected) | (df['entity_2_name'] == selected)]
+
+    st.subheader(f"🔗 Connections for: **{selected}**")
+
+    for _, row in related.iterrows():
+        source = row['entity_1_name']
+        target = row['entity_2_name']
+        direction = "→"
+        if selected == target:
+            source, target = target, source
+            direction = "←"
+
+        # Visualize connection
+        st.markdown(f"**{source}** {direction} *{row['relationship_type']}* {target}")
+        st.markdown(f"• Category: `{row['category']}`")
+
+        if pd.notna(row['notes']):
+            st.markdown(f"• Notes: _{row['notes']}_")
+
+        if pd.notna(row['source']):
+            st.markdown(f"• [Source]({row['source']})")
+
+        st.markdown("---")
