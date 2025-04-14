@@ -1,0 +1,20 @@
+- id: US_Military_Aid_Israel
+  name: U.S. Military Aid to Israel
+  amount: "$3.8 billion per year"
+  years_active: "2016–present"
+  type: Military Financing
+  description: >
+    Extensive U.S. military aid agreement under a Memorandum of Understanding, enabling Israeli military actions in Gaza and the wider region.
+  references:
+    - "https://crsreports.congress.gov/product/pdf/RL/RL33222"
+    - "https://www.state.gov/u-s-security-cooperation-with-israel/"
+
+- id: USAID_Palestinian_Territories
+  name: USAID Conditional Aid in Palestinian Territories
+  amount: "Varies ($100M–$400M annually)"
+  years_active: "Ongoing"
+  type: Economic and Humanitarian Aid
+  description: >
+    U.S.-managed conditional aid used to exert political leverage in Gaza and the West Bank, frequently withheld to pressure local political compliance.
+  references:
+    - "https://www.usaid.gov/west-bank-and-gaza"

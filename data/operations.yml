@@ -1,0 +1,27 @@
+- id: Timber_Sycamore
+  name: Operation Timber Sycamore
+  countries_involved:
+    - United States
+    - Saudi Arabia
+    - Jordan
+    - Israel
+  years_active: "2012–2017"
+  type: Covert Military & Intelligence Operation
+  description: >
+    CIA-backed covert operation funneling arms and support to anti-Assad factions in Syria, indirectly influencing instability and militarization in surrounding regions including Gaza.
+  references:
+    - "https://www.nytimes.com/2017/08/02/world/middleeast/cia-syria-rebel-arm-train-trump.html"
+    - "https://wikileaks.org/plusd/cables/06DAMASCUS5399_a.html"
+
+- id: Protective_Edge
+  name: Operation Protective Edge
+  countries_involved:
+    - Israel
+    - United States (indirect support)
+  years_active: "2014"
+  type: Military Campaign
+  description: >
+    Large-scale Israeli military operation in Gaza, heavily supported by U.S. arms and funding, resulting in extensive Palestinian casualties and infrastructural devastation.
+  references:
+    - "https://www.un.org/unispal/document/auto-insert-201585/"
+    - "https://www.amnesty.org/en/latest/news/2015/07/israel-gaza-operation-protective-edge-war-crimes/"

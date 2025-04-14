@@ -1,0 +1,20 @@
+- id: US_Weapons_Israel
+  name: U.S. Weapons Supplies to Israel
+  supplier: United States
+  recipient: Israel Defense Forces (IDF)
+  type: Arms Trade & Military Logistics
+  description: >
+    Major military hardware supplies, including aircraft, missiles, and ammunition, directly used by Israel in military operations targeting Gaza.
+  references:
+    - "https://www.sipri.org/databases/armstransfers"
+    - "https://crsreports.congress.gov/product/pdf/RL/RL33222"
+
+- id: Iron_Dome_System
+  name: Iron Dome Missile Defense System
+  supplier: United States (funding), Israel (production)
+  recipient: Israel Defense Forces (IDF)
+  type: Missile Defense Infrastructure
+  description: >
+    Missile defense system heavily funded by the U.S. (over $1.6 billion), allowing Israel military superiority and strategic impunity in conflicts involving Gaza.
+  references:
+    - "https://www.raytheonmissilesanddefense.com/what-we-do/missile-defense/air-and-missile-defense-systems/iron-dome"

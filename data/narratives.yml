@@ -1,0 +1,20 @@
+- id: Western_Media_Gaza
+  name: Western Media Framing of Gaza
+  type: Media & Propaganda
+  main_outlets:
+    - BBC
+    - CNN
+    - Fox News
+  description: >
+    Persistent portrayal of Gaza conflict through narratives emphasizing Israeli security over Palestinian rights, minimizing Palestinian suffering, and framing conflict as mutual aggression rather than occupation-driven violence.
+  examples:
+    - "https://www.bbc.com/news/world-middle-east-57110368"
+    - "https://edition.cnn.com/specials/middleeast/gaza-israel-conflict"
+
+- id: BTI_MENA
+  name: Bertelsmann Transformation Index (BTI) in MENA
+  type: Academic & Think Tank Influence
+  description: >
+    Bertelsmann Stiftung’s rankings subtly shape global perceptions of Middle Eastern governance, implicitly justifying Western interventions by labeling regional actors as 'authoritarian' or 'unstable.'
+  examples:
+    - "https://bti-project.org/en/reports/regional-report-ENA.html"

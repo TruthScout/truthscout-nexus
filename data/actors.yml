@@ -1,0 +1,23 @@
+- id: US_Gov
+  name: United States Government
+  type: Nation-State
+  role:
+    - Military Support
+    - Financial Backing
+    - Diplomatic Protection
+  description: >
+    Directly and indirectly influences Gaza's instability through extensive military aid to Israel, financial assistance packages, and diplomatic shielding at the United Nations.
+  references:
+    - "https://www.state.gov/u-s-security-cooperation-with-israel/"
+    - "https://www.usaspending.gov/recipient/country/ISR"
+
+- id: Rothschild_Banking_Group
+  name: Rothschild Banking Group
+  type: Financial Institution
+  role:
+    - Financial Influence
+    - Asset Management
+  description: >
+    Historically involved in global finance networks, indirectly influencing regional politics through asset holdings and financial intermediaries in the Middle East, including infrastructure and strategic assets in Israel.
+  references:
+    - "https://www.rothschildandco.com/en/newsroom/"
