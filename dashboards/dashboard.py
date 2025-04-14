@@ -183,7 +183,7 @@ elif view == "📡 Truth Network":
     with col4:
         selected_impact = st.selectbox("⚖️ Impact Area", impact_options, index=impact_options.index(selected_impact) if selected_impact in impact_options else 0)
 
-    # Filter dataset
+    # Apply dropdown filters
     filtered_df = df[
         (df["entity_1_region"] == selected_region) &
         (df["conflict"] == selected_conflict) &
@@ -200,17 +200,21 @@ elif view == "📡 Truth Network":
             df["relationship_type"].str.lower().str.contains(search_query)
         ]
 
-    # Dynamic scoring (safe only if not empty)
+    # 🧠 Robust dynamic scoring
     def compute_relevance(row):
         score = 1
-        if "profit" in row["relationship_type"].lower():
-            score += 4
-        if "media" in row["impact_area"].lower():
-            score += 2
-        if row["conflict"].lower() == "gaza":
-            score += 2
+        try:
+            if "profit" in str(row.get("relationship_type", "")).lower():
+                score += 4
+            if "media" in str(row.get("impact_area", "")).lower():
+                score += 2
+            if str(row.get("conflict", "")).lower() == "gaza":
+                score += 2
+        except Exception:
+            pass
         return score
 
+    # Safely score only if data exists
     if not filtered_df.empty:
         filtered_df = filtered_df.copy()
         filtered_df["dynamic_score"] = filtered_df.apply(compute_relevance, axis=1)
@@ -218,7 +222,7 @@ elif view == "📡 Truth Network":
     else:
         st.warning("⚠️ No data matches the current filters.")
 
-    # Display results
+    # Show entries
     st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
     for _, row in filtered_df.iterrows():
         st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
@@ -247,7 +251,7 @@ elif view == "📡 Truth Network":
         st.code(shareable_link, language="markdown")
         st.success("Link generated! You can use this as a citation in an article.")
 
-    # Graph
+    # 🌐 Graph
     st.markdown("## 🕸️ Network Graph View")
     G = nx.DiGraph()
 
