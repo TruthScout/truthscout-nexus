@@ -144,34 +144,51 @@ elif view == "🎯 Investigative Spotlight":
 # View 5: Truth Network
 # ----------------------------
 elif view == "📡 Truth Network":
+    import urllib.parse
+
     st.title("📡 Truth Network: Interest-Based Filter Explorer")
 
     # Load updated CSV
     truth_network_path = os.path.join(data_dir, "truth-network.csv")
     df = pd.read_csv(truth_network_path)
 
+    # 🔍 Text Search
+    search_query = st.text_input("Search by name, tag, or relation", "").strip().lower()
+
     # Filter controls
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        selected_region = st.selectbox("🌍 Region", sorted(set(df["entity_1_region"].dropna().unique())), index=0)
+        selected_region = st.selectbox("🌍 Region", sorted(df["entity_1_region"].dropna().unique()), index=0)
     with col2:
-        selected_conflict = st.selectbox("💣 Conflict", sorted(set(df["conflict"].dropna().unique())), index=0)
+        selected_conflict = st.selectbox("💣 Conflict", sorted(df["conflict"].dropna().unique()), index=0)
     with col3:
-        selected_type = st.selectbox("🏷️ Entity Type", sorted(set(df["entity_1_type"].dropna().unique())), index=0)
+        selected_type = st.selectbox("🏷️ Entity Type", sorted(df["entity_1_type"].dropna().unique()), index=0)
     with col4:
-        selected_impact = st.selectbox("⚖️ Impact Area", sorted(set(df["impact_area"].dropna().unique())), index=0)
+        selected_impact = st.selectbox("⚖️ Impact Area", sorted(df["impact_area"].dropna().unique()), index=0)
 
-    # Apply filters
+    # Apply dropdown filters
     filtered_df = df[
         (df["entity_1_region"] == selected_region) &
         (df["conflict"] == selected_conflict) &
         (df["entity_1_type"] == selected_type) &
         (df["impact_area"] == selected_impact)
-    ].sort_values(by="relevance_score", ascending=False)
+    ]
 
+    # Apply search filter
+    if search_query:
+        filtered_df = filtered_df[
+            df["entity_1_name"].str.lower().str.contains(search_query) |
+            df["entity_2_name"].str.lower().str.contains(search_query) |
+            df["tags"].fillna("").str.lower().str.contains(search_query) |
+            df["relationship_type"].str.lower().str.contains(search_query)
+        ]
+
+    filtered_df = filtered_df.sort_values(by="relevance_score", ascending=False)
+
+    # Display result count
     st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
 
-    # Display filtered results
+    # Render filtered results
     for _, row in filtered_df.iterrows():
         st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
         st.markdown(f"• Conflict: `{row['conflict']}` | Region: `{row['entity_1_region']}`")
@@ -179,4 +196,22 @@ elif view == "📡 Truth Network":
         if pd.notna(row['tags']):
             st.markdown(f"• Tags: _{row['tags']}_")
         if pd.notna(row['source']):
-            st
+            st.markdown(f"• [Source]({row['source']})")
+        st.markdown("---")
+
+    # 🔗 URL Sharing
+    st.markdown("### 📤 Share This View")
+    params = {
+        "region": selected_region,
+        "conflict": selected_conflict,
+        "type": selected_type,
+        "impact": selected_impact,
+        "search": search_query
+    }
+    query_string = urllib.parse.urlencode(params)
+    base_url = "https://truthscore-nexus.streamlit.app"
+    shareable_link = f"{base_url}/?{query_string}"
+
+    if st.button("🔗 Copy Sharable Filter Link"):
+        st.code(shareable_link, language="markdown")
+        st.success("Link generated! You can use this as a citation in an article.")
