@@ -157,7 +157,7 @@ elif view == "📡 Truth Network":
     df = pd.read_csv(truth_network_path)
 
     # Parse URL query params
-    query_params = st.experimental_get_query_params()
+    query_params = st.query_params()
     selected_region = query_params.get("region", [df["entity_1_region"].dropna().unique()[0]])[0]
     selected_conflict = query_params.get("conflict", [df["conflict"].dropna().unique()[0]])[0]
     selected_type = query_params.get("type", [df["entity_1_type"].dropna().unique()[0]])[0]
@@ -212,6 +212,7 @@ elif view == "📡 Truth Network":
             score += 2
         return score
 
+    filtered_df = filtered_df.copy()  # make it writable
     filtered_df["dynamic_score"] = filtered_df.apply(compute_relevance, axis=1)
     filtered_df = filtered_df.sort_values(by="dynamic_score", ascending=False)
 
