@@ -7,12 +7,30 @@
     - Arms Industry Investment
     - Infrastructure Financing
   description: >
-    World's largest asset manager, with significant holdings in defense contractors supplying Israel. Tied to infrastructure investments in conflict zones.
+    BlackRock is the world’s largest asset manager with significant holdings in weapons manufacturers used in the 2014 Gaza war. Their ownership stakes in Raytheon and Lockheed Martin generated direct financial benefit during Operation Protective Edge.
   linked_operations:
     - Operation Protective Edge
-  verified_sources:
-    - "https://investigate.afsc.org/company/blackrock"
-    - "https://www.blackrock.com/corporate/investor-relations/blackrock-shareholder-report"
+  profit_events:
+    - operation: Operation Protective Edge
+      sector: Military
+      estimated_profit_usd: 45000000
+      years: "2014–2015"
+      notes: "Profits via holdings in Raytheon (Tomahawk & air defense systems) and Lockheed Martin."
+      evidence_links:
+        - "https://investigate.afsc.org/company/blackrock"
+        - "https://www.opensecrets.org/news/2021/05/us-weapons-israel-defense-companies-lobbying"
+  owned_media:
+    - Bloomberg (partial shareholder via ETF index holdings)
+    - CNBC (indirect influence through Comcast/GE ETF ownership)
+  key_executives:
+    - name: Larry Fink
+      role: CEO
+      other_roles:
+        - Board Member, World Economic Forum
+        - Advisor to U.S. Federal Reserve (historical)
+      verified_sources:
+        - "https://www.blackrock.com/corporate/about-us/leadership/larry-fink"
+        - "https://www.weforum.org/people/larry-fink"
 
 - id: vanguard
   name: Vanguard Group

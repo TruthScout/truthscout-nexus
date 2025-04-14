@@ -23,7 +23,12 @@ def load_markdown(path):
 # Sidebar navigation
 view = st.sidebar.radio(
     "Select View",
-    ["🧩 Actor Intelligence", "📖 Gaza Case Study", "📂 Structured Data"]
+    [
+        "🧩 Actor Intelligence",
+        "📖 Gaza Case Study",
+        "📂 Structured Data",
+        "🎯 Investigative Spotlight"
+    ]
 )
 
 # ----------------------------
@@ -91,3 +96,45 @@ elif view == "📂 Structured Data":
                     elif key != "name":
                         st.markdown(f"**{key.replace('_', ' ').capitalize()}:** {value}")
         st.markdown("---")
+# ----------------------------
+# View 4: Interactive Actor View
+# ----------------------------
+elif view == "🎯 Investigative Spotlight":
+    st.title("🎯 Investigative Spotlight: BlackRock and Gaza 2014")
+
+    actors = load_yaml(os.path.join(data_dir, "actors.yml"))
+    blackrock = next((a for a in actors if a["id"] == "blackrock"), None)
+
+    if blackrock:
+        st.header(f"🔍 {blackrock['name']}")
+        st.markdown(f"**Type:** {blackrock['type']}")
+        st.markdown(f"**Region:** {blackrock['region']}")
+        st.markdown(f"**Roles:** {', '.join(blackrock['role'])}")
+        st.markdown(f"**Description:** {blackrock['description']}")
+
+        # Profit Events
+        if "profit_events" in blackrock:
+            st.subheader("💰 Profit Events")
+            for p in blackrock["profit_events"]:
+                st.markdown(f"**Operation:** {p['operation']}")
+                st.markdown(f"- Sector: {p['sector']}")
+                st.markdown(f"- Estimated Profit: ${p['estimated_profit_usd']:,} USD")
+                st.markdown(f"- Notes: {p['notes']}")
+                st.markdown("**Evidence:**")
+                for link in p["evidence_links"]:
+                    st.markdown(f"- [{link}]({link})")
+
+        # Media Ownership
+        if "owned_media" in blackrock:
+            st.subheader("📰 Media Influence")
+            st.markdown(", ".join(blackrock["owned_media"]))
+
+        # Execs
+        if "key_executives" in blackrock:
+            st.subheader("🧑‍💼 Key Executives")
+            for exec in blackrock["key_executives"]:
+                st.markdown(f"**{exec['name']}** — {exec['role']}")
+                for role in exec.get("other_roles", []):
+                    st.markdown(f"- {role}")
+                for src in exec.get("verified_sources", []):
+                    st.markdown(f"[Source]({src})")
