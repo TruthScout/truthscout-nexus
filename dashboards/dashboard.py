@@ -156,7 +156,7 @@ elif view == "📡 Truth Network":
     truth_network_path = os.path.join(data_dir, "truth-network.csv")
     df = pd.read_csv(truth_network_path)
 
-    # Parse filters from URL
+    # Parse URL query params
     query_params = st.experimental_get_query_params()
     selected_region = query_params.get("region", [df["entity_1_region"].dropna().unique()[0]])[0]
     selected_conflict = query_params.get("conflict", [df["conflict"].dropna().unique()[0]])[0]
@@ -164,21 +164,27 @@ elif view == "📡 Truth Network":
     selected_impact = query_params.get("impact", [df["impact_area"].dropna().unique()[0]])[0]
     search_query = query_params.get("search", [""])[0].lower()
 
-    # UI search bar
+    # UI text input for search
     search_query = st.text_input("Search by name, tag, or relation", value=search_query).strip().lower()
 
-    # Filter selectors
+    # Dropdown filters using correct selectbox syntax
     col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        selected_region = st.selectbox("🌍 Region", sorted(df["entity_1_region"].dropna().unique()), index=None, key="region", value=selected_region)
-    with col2:
-        selected_conflict = st.selectbox("💣 Conflict", sorted(df["conflict"].dropna().unique()), index=None, key="conflict", value=selected_conflict)
-    with col3:
-        selected_type = st.selectbox("🏷️ Entity Type", sorted(df["entity_1_type"].dropna().unique()), index=None, key="type", value=selected_type)
-    with col4:
-        selected_impact = st.selectbox("⚖️ Impact Area", sorted(df["impact_area"].dropna().unique()), index=None, key="impact", value=selected_impact)
 
-    # Apply dropdown filters
+    region_options = sorted(df["entity_1_region"].dropna().unique())
+    conflict_options = sorted(df["conflict"].dropna().unique())
+    type_options = sorted(df["entity_1_type"].dropna().unique())
+    impact_options = sorted(df["impact_area"].dropna().unique())
+
+    with col1:
+        selected_region = st.selectbox("🌍 Region", region_options, index=region_options.index(selected_region) if selected_region in region_options else 0)
+    with col2:
+        selected_conflict = st.selectbox("💣 Conflict", conflict_options, index=conflict_options.index(selected_conflict) if selected_conflict in conflict_options else 0)
+    with col3:
+        selected_type = st.selectbox("🏷️ Entity Type", type_options, index=type_options.index(selected_type) if selected_type in type_options else 0)
+    with col4:
+        selected_impact = st.selectbox("⚖️ Impact Area", impact_options, index=impact_options.index(selected_impact) if selected_impact in impact_options else 0)
+
+    # Apply filters
     filtered_df = df[
         (df["entity_1_region"] == selected_region) &
         (df["conflict"] == selected_conflict) &
@@ -186,7 +192,7 @@ elif view == "📡 Truth Network":
         (df["impact_area"] == selected_impact)
     ]
 
-    # Apply search filter
+    # Apply text search
     if search_query:
         filtered_df = filtered_df[
             df["entity_1_name"].str.lower().str.contains(search_query) |
@@ -195,7 +201,7 @@ elif view == "📡 Truth Network":
             df["relationship_type"].str.lower().str.contains(search_query)
         ]
 
-    # 🧠 Dynamic Relevance Scoring
+    # Dynamic relevance score
     def compute_relevance(row):
         score = 1
         if "profit" in row["relationship_type"].lower():
@@ -209,10 +215,8 @@ elif view == "📡 Truth Network":
     filtered_df["dynamic_score"] = filtered_df.apply(compute_relevance, axis=1)
     filtered_df = filtered_df.sort_values(by="dynamic_score", ascending=False)
 
-    # Display count
+    # Display filtered results
     st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
-
-    # Render results
     for _, row in filtered_df.iterrows():
         st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
         st.markdown(f"• Conflict: `{row['conflict']}` | Region: `{row['entity_1_region']}`")
@@ -223,7 +227,7 @@ elif view == "📡 Truth Network":
             st.markdown(f"• [Source]({row['source']})")
         st.markdown("---")
 
-    # 🔗 Sharable link
+    # Generate sharable link
     st.markdown("### 📤 Share This View")
     params = {
         "region": selected_region,
@@ -240,9 +244,9 @@ elif view == "📡 Truth Network":
         st.code(shareable_link, language="markdown")
         st.success("Link generated! You can use this as a citation in an article.")
 
-    # --------------------------
-    # 🕸️ Graph Visualization
-    # --------------------------
+    # ---------------------------------
+    # 🕸️ Network Graph Visualization
+    # ---------------------------------
     st.markdown("## 🕸️ Network Graph View")
 
     G = nx.DiGraph()
