@@ -145,26 +145,38 @@ elif view == "🎯 Investigative Spotlight":
 # ----------------------------
 elif view == "📡 Truth Network":
     import urllib.parse
+    import networkx as nx
+    from pyvis.network import Network
+    import streamlit.components.v1 as components
+    import tempfile
 
     st.title("📡 Truth Network: Interest-Based Filter Explorer")
 
-    # Load updated CSV
+    # Load CSV
     truth_network_path = os.path.join(data_dir, "truth-network.csv")
     df = pd.read_csv(truth_network_path)
 
-    # 🔍 Text Search
-    search_query = st.text_input("Search by name, tag, or relation", "").strip().lower()
+    # Parse filters from URL
+    query_params = st.experimental_get_query_params()
+    selected_region = query_params.get("region", [df["entity_1_region"].dropna().unique()[0]])[0]
+    selected_conflict = query_params.get("conflict", [df["conflict"].dropna().unique()[0]])[0]
+    selected_type = query_params.get("type", [df["entity_1_type"].dropna().unique()[0]])[0]
+    selected_impact = query_params.get("impact", [df["impact_area"].dropna().unique()[0]])[0]
+    search_query = query_params.get("search", [""])[0].lower()
 
-    # Filter controls
+    # UI search bar
+    search_query = st.text_input("Search by name, tag, or relation", value=search_query).strip().lower()
+
+    # Filter selectors
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        selected_region = st.selectbox("🌍 Region", sorted(df["entity_1_region"].dropna().unique()), index=0)
+        selected_region = st.selectbox("🌍 Region", sorted(df["entity_1_region"].dropna().unique()), index=None, key="region", value=selected_region)
     with col2:
-        selected_conflict = st.selectbox("💣 Conflict", sorted(df["conflict"].dropna().unique()), index=0)
+        selected_conflict = st.selectbox("💣 Conflict", sorted(df["conflict"].dropna().unique()), index=None, key="conflict", value=selected_conflict)
     with col3:
-        selected_type = st.selectbox("🏷️ Entity Type", sorted(df["entity_1_type"].dropna().unique()), index=0)
+        selected_type = st.selectbox("🏷️ Entity Type", sorted(df["entity_1_type"].dropna().unique()), index=None, key="type", value=selected_type)
     with col4:
-        selected_impact = st.selectbox("⚖️ Impact Area", sorted(df["impact_area"].dropna().unique()), index=0)
+        selected_impact = st.selectbox("⚖️ Impact Area", sorted(df["impact_area"].dropna().unique()), index=None, key="impact", value=selected_impact)
 
     # Apply dropdown filters
     filtered_df = df[
@@ -183,12 +195,24 @@ elif view == "📡 Truth Network":
             df["relationship_type"].str.lower().str.contains(search_query)
         ]
 
-    filtered_df = filtered_df.sort_values(by="relevance_score", ascending=False)
+    # 🧠 Dynamic Relevance Scoring
+    def compute_relevance(row):
+        score = 1
+        if "profit" in row["relationship_type"].lower():
+            score += 4
+        if "media" in row["impact_area"].lower():
+            score += 2
+        if row["conflict"].lower() == "gaza":
+            score += 2
+        return score
 
-    # Display result count
+    filtered_df["dynamic_score"] = filtered_df.apply(compute_relevance, axis=1)
+    filtered_df = filtered_df.sort_values(by="dynamic_score", ascending=False)
+
+    # Display count
     st.subheader(f"🔗 {len(filtered_df)} Relevant Connections")
 
-    # Render filtered results
+    # Render results
     for _, row in filtered_df.iterrows():
         st.markdown(f"**{row['entity_1_name']}** *{row['relationship_type']}* **{row['entity_2_name']}**")
         st.markdown(f"• Conflict: `{row['conflict']}` | Region: `{row['entity_1_region']}`")
@@ -199,7 +223,7 @@ elif view == "📡 Truth Network":
             st.markdown(f"• [Source]({row['source']})")
         st.markdown("---")
 
-    # 🔗 URL Sharing
+    # 🔗 Sharable link
     st.markdown("### 📤 Share This View")
     params = {
         "region": selected_region,
@@ -215,31 +239,25 @@ elif view == "📡 Truth Network":
     if st.button("🔗 Copy Sharable Filter Link"):
         st.code(shareable_link, language="markdown")
         st.success("Link generated! You can use this as a citation in an article.")
-from pyvis.network import Network
-import networkx as nx
-import streamlit.components.v1 as components
-import tempfile
 
-st.markdown("## 🕸️ Network Graph View")
+    # --------------------------
+    # 🕸️ Graph Visualization
+    # --------------------------
+    st.markdown("## 🕸️ Network Graph View")
 
-# Build graph from filtered data
-G = nx.DiGraph()
+    G = nx.DiGraph()
+    for _, row in filtered_df.iterrows():
+        e1 = row["entity_1_name"]
+        e2 = row["entity_2_name"]
+        label = row["relationship_type"]
+        G.add_node(e1, title=e1, group=row["entity_1_type"])
+        G.add_node(e2, title=e2, group=row["entity_2_type"])
+        G.add_edge(e1, e2, title=label)
 
-for _, row in filtered_df.iterrows():
-    e1 = row["entity_1_name"]
-    e2 = row["entity_2_name"]
-    label = row["relationship_type"]
+    net = Network(height="500px", width="100%", notebook=False, directed=True)
+    net.from_nx(G)
 
-    G.add_node(e1, title=e1, group=row["entity_1_type"])
-    G.add_node(e2, title=e2, group=row["entity_2_type"])
-    G.add_edge(e1, e2, title=label)
-
-# Render with Pyvis
-net = Network(height="500px", width="100%", notebook=False, directed=True)
-net.from_nx(G)
-
-# Use temporary file
-with tempfile.NamedTemporaryFile("w+", delete=False, suffix=".html") as f:
-    path = f.name
-    net.save_graph(path)
-    components.html(open(path, 'r', encoding='utf-8').read(), height=600, scrolling=True)
+    with tempfile.NamedTemporaryFile("w+", delete=False, suffix=".html") as f:
+        path = f.name
+        net.save_graph(path)
+        components.html(open(path, 'r', encoding='utf-8').read(), height=600, scrolling=True)
