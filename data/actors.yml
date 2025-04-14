@@ -1,23 +1,161 @@
-- id: US_Gov
-  name: United States Government
-  type: Nation-State
+- id: blackrock
+  name: BlackRock Inc.
+  type: Financial Institution
+  region: Global
   role:
-    - Military Support
-    - Financial Backing
-    - Diplomatic Protection
+    - Asset Management
+    - Arms Industry Investment
+    - Infrastructure Financing
   description: >
-    Directly and indirectly influences Gaza's instability through extensive military aid to Israel, financial assistance packages, and diplomatic shielding at the United Nations.
-  references:
-    - "https://www.state.gov/u-s-security-cooperation-with-israel/"
-    - "https://www.usaspending.gov/recipient/country/ISR"
+    World's largest asset manager, with significant holdings in defense contractors supplying Israel. Tied to infrastructure investments in conflict zones.
+  linked_operations:
+    - Operation Protective Edge
+  verified_sources:
+    - "https://investigate.afsc.org/company/blackrock"
+    - "https://www.blackrock.com/corporate/investor-relations/blackrock-shareholder-report"
 
-- id: Rothschild_Banking_Group
+- id: vanguard
+  name: Vanguard Group
+  type: Financial Institution
+  region: Global
+  role:
+    - Investment Management
+    - Co-owner of Defense Contractors
+  description: >
+    Alongside BlackRock, holds major shares in U.S. arms manufacturers and Israeli-linked technology firms used in Gaza surveillance and warfare.
+  linked_operations:
+    - Operation Guardian of the Walls
+  verified_sources:
+    - "https://investigate.afsc.org/company/vanguard-group"
+    - "https://www.opensecrets.org/news/2021/05/us-weapons-israel-defense-companies-lobbying"
+
+- id: us_state_department
+  name: United States Department of State
+  type: Government Agency
+  region: United States
+  role:
+    - Foreign Aid Allocation
+    - Diplomatic Veto Power
+    - Military Sales Authorization
+  description: >
+    Core player in sustaining Israel’s strategic advantage via arms deals, UN vetoes, and conditional aid to Palestine.
+  linked_operations:
+    - Operation Protective Edge
+    - Blocking Gaza UN Ceasefire Votes
+  verified_sources:
+    - "https://www.state.gov/u-s-security-cooperation-with-israel/"
+    - "https://www.aljazeera.com/news/2023/10/18/us-vetoes-un-resolution-calling-for-gaza-ceasefire"
+
+- id: israeli_mod
+  name: Israeli Ministry of Defense
+  type: Government Agency
+  region: Israel
+  role:
+    - Military Command
+    - Occupation Management
+    - Arms Procurement
+  description: >
+    Central body responsible for all IDF operations in Gaza, coordination with foreign arms suppliers, and regulation of Palestinian territories.
+  linked_operations:
+    - Operation Cast Lead
+    - Operation Protective Edge
+    - Operation Breaking Dawn
+  verified_sources:
+    - "https://www.gov.il/en/Departments/ministry_of_defense"
+    - "https://www.hrw.org/report/2014/09/11/black-flag/israeli-conduct-hostilities-gaza"
+
+- id: bertelsmann
+  name: Bertelsmann Stiftung
+  type: Think Tank / Foundation
+  region: Germany / Global
+  role:
+    - Policy Ratings
+    - Narrative Framing
+  description: >
+    Publishes the Bertelsmann Transformation Index (BTI), which subtly legitimizes Western interventions by labeling non-aligned nations as authoritarian or unstable.
+  linked_operations:
+    - Regional Perception Management
+  verified_sources:
+    - "https://bti-project.org/en/reports"
+    - "https://www.bertelsmann-stiftung.de/en/"
+
+- id: rothschild_group
   name: Rothschild Banking Group
   type: Financial Institution
+  region: Europe / Global
   role:
-    - Financial Influence
-    - Asset Management
+    - Global Wealth Management
+    - Infrastructure Finance
+    - Energy Holdings
   description: >
-    Historically involved in global finance networks, indirectly influencing regional politics through asset holdings and financial intermediaries in the Middle East, including infrastructure and strategic assets in Israel.
-  references:
+    Historically tied to European colonial financing. Manages wealth and corporate deals with strong links to military-industrial and geopolitical strategy networks.
+  linked_operations:
+    - Infrastructure Mergers in Israel
+  verified_sources:
     - "https://www.rothschildandco.com/en/newsroom/"
+    - "https://mondoweiss.net/2022/04/the-banking-bloodline-rothschilds-and-the-rise-of-israel"
+
+- id: mossad
+  name: Mossad
+  type: Intelligence Agency
+  region: Israel
+  role:
+    - Covert Operations
+    - Assassinations
+    - Surveillance Technology Development
+  description: >
+    Israel’s foreign intelligence service. Operates globally to protect Israeli interests, suppress dissident networks, and coordinate cyber-surveillance tools exported to other regimes.
+  linked_operations:
+    - Operation Wrath of God
+    - Pegasus Spyware Development
+  verified_sources:
+    - "https://www.theguardian.com/world/2021/jul/18/pegasus-project-spyware-israel-nso-group"
+    - "https://www.brookings.edu/articles/israels-mossad-the-most-effective-intelligence-service-in-the-world"
+
+- id: cia
+  name: Central Intelligence Agency (CIA)
+  type: Intelligence Agency
+  region: United States
+  role:
+    - Covert Regime Operations
+    - Proxy Warfare
+    - Disinformation Campaigns
+  description: >
+    Historical architect of regional destabilization across the Middle East, including Syria, Lebanon, and Gaza-adjacent policies through funding and disinformation.
+  linked_operations:
+    - Operation Timber Sycamore
+    - Operation Cyclone
+  verified_sources:
+    - "https://www.nytimes.com/2017/08/02/world/middleeast/cia-syria-rebel-arm-train-trump.html"
+    - "https://www.theguardian.com/world/2016/jan/24/cia-operation-timber-sycamore-syria"
+
+- id: european_commission
+  name: European Commission
+  type: Governmental Body
+  region: European Union
+  role:
+    - Conditional Development Aid
+    - Regulatory Lobbying
+  description: >
+    Uses trade access, regulatory frameworks, and humanitarian aid to exert influence over Palestinian governance and political recognition.
+  linked_operations:
+    - EU Partnership Frameworks in Gaza
+  verified_sources:
+    - "https://neighbourhood-enlargement.ec.europa.eu/eu-support-palestinian-people_en"
+    - "https://ec.europa.eu/commission/presscorner/detail/en/IP_21_3503"
+
+- id: unrwa
+  name: United Nations Relief and Works Agency (UNRWA)
+  type: Humanitarian Agency
+  region: Palestine / Middle East
+  role:
+    - Refugee Aid
+    - Education
+    - Health Services
+  description: >
+    UN agency providing essential services to millions of Palestinian refugees. Frequently attacked in media and by governments seeking to dismantle refugee recognition.
+  linked_operations:
+    - Post-conflict Reconstruction
+  verified_sources:
+    - "https://www.unrwa.org/"
+    - "https://www.aljazeera.com/news/2024/1/28/unrwa-under-attack"
