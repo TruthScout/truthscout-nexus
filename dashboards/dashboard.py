@@ -215,3 +215,31 @@ elif view == "📡 Truth Network":
     if st.button("🔗 Copy Sharable Filter Link"):
         st.code(shareable_link, language="markdown")
         st.success("Link generated! You can use this as a citation in an article.")
+from pyvis.network import Network
+import networkx as nx
+import streamlit.components.v1 as components
+import tempfile
+
+st.markdown("## 🕸️ Network Graph View")
+
+# Build graph from filtered data
+G = nx.DiGraph()
+
+for _, row in filtered_df.iterrows():
+    e1 = row["entity_1_name"]
+    e2 = row["entity_2_name"]
+    label = row["relationship_type"]
+
+    G.add_node(e1, title=e1, group=row["entity_1_type"])
+    G.add_node(e2, title=e2, group=row["entity_2_type"])
+    G.add_edge(e1, e2, title=label)
+
+# Render with Pyvis
+net = Network(height="500px", width="100%", notebook=False, directed=True)
+net.from_nx(G)
+
+# Use temporary file
+with tempfile.NamedTemporaryFile("w+", delete=False, suffix=".html") as f:
+    path = f.name
+    net.save_graph(path)
+    components.html(open(path, 'r', encoding='utf-8').read(), height=600, scrolling=True)
